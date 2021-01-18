@@ -21,16 +21,13 @@ dns_raw = File.readlines("zone")
 def parse_dns(dns)
   record_arr = []
   dns_map = {}
-  dns.each { |record|
-    if (!record.start_with?("#") && record.strip.length > 0)
-      record_arr.push(record.strip)
-    end
-  }
-  record_arr.each { |record|
-    dns_details = record.split(",").map { |item| item.strip }
-    dns_map[dns_details[1]] = {
-      :type => dns_details[0],
-      :destination => dns_details[2],
+  dns.
+    reject { |record| !(!record.start_with?("#") && record.strip.length > 0) }.
+    map { |record| record.split(",").map { |item| item.strip } }.
+    each { |record|
+    dns_map[record[1]] = {
+      :type => record[0],
+      :destination => record[2],
     }
   }
   dns_map
