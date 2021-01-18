@@ -19,7 +19,6 @@ domain = get_command_line_argument
 dns_raw = File.readlines("zone")
 
 def parse_dns(dns)
-  record_arr = []
   dns_map = {}
   dns.
     reject { |record| !(!record.start_with?("#") && record.strip.length > 0) }.
