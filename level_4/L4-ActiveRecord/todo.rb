@@ -6,15 +6,15 @@ class Todo < ActiveRecord::Base
   end
 
   def self.overdue
-    all.filter { |todo| todo.overdue? }
+    all.where("due_date < ?", Date.today)
   end
 
   def self.due_today
-    all.filter { |todo| todo.due_today? }
+    all.where("due_date = ?", Date.today)
   end
 
   def self.due_later
-    all.filter { |todo| todo.due_later? }
+    all.where("due_date > ?", Date.today)
   end
 
   def self.show_list
